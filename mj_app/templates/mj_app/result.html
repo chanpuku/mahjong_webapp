@@ -1,0 +1,22 @@
+{% load static %}
+<div class="result">
+	<table class="result-table">
+		<thead>
+			{% for v in info %}
+				<td>{{v}}</td>
+			{% empty %}
+			{% endfor %}
+		</thead>
+		{% for player in players %}
+			<tbody>
+				<td>{{player.name}}</td>
+				{% for v in player.p %}
+					<td>{{v}}</td>
+				{% empty %}
+				{% endfor %}
+			</tbody>
+		{% empty %}
+		{% endfor %}
+	</table>
+</div>
+

@@ -1,0 +1,126 @@
+{% load static %}
+<!doctype html>
+<html lang="ja">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet"  href="{% static 'mj_app/css/style.css' %}">
+		<!-- favicon -->
+		<link rel="icon" href="{% static 'mj_app/images/my_cat.png' %}">
+
+		<title>麻雀順位予想</title>
+	</head>
+	<body>
+		<h1>麻雀順位予想</h1>
+		<div class="container">
+			<div class="input">
+				<form id="input_info" action="{% url 'mj_app:execute' %}" method="POST">
+					{% csrf_token %}
+					<div>
+						<p>ルール</p>
+						<div class="group-radio" id="id_num_of_people">
+							<div>
+								<input type="radio" name="num_of_people" id="id_people_four" value="4" checked>
+								<label for="id_people_four">4人麻雀</label>
+							</div>
+							<div>
+								<input type="radio" name="num_of_people" id="id_people_three" value="3">
+								<label for="id_people_three">3人麻雀</label>
+							</div>
+						</div>
+
+						<div class="group-radio" id="id_num_of_kyoku">
+							<div>
+								<input type="radio" name="num_of_kyoku" id="id_kyoku_hanchan" value="nan" checked>
+								<label for="id_kyoku_hanchan">半荘戦</label>
+							</div>
+							<div>
+								<input type="radio" name="num_of_kyoku" id="id_kyoku_tonpu" value="ton">
+								<label id="id_kyoku_tonpu_label" for="id_kyoku_tonpu">東風戦</label>
+							</div>
+							<div id="santon_message">
+								3人麻雀の東風戦は学習データの都合上、実装しておりません。
+							</div>
+						</div>
+					</div>
+
+					<p>場風</p>
+					<div class="group-radio" id="id_bakaze">
+						<div>
+							<input type="radio" name="bakaze" id="id_bakaze_ton" value="0" checked>
+							<label for="id_bakaze_ton">東</label>
+						</div>
+						<div>
+							<input type="radio" name="bakaze" id="id_bakaze_nan" value="1">
+							<label for="id_bakaze_nan">南</label>
+						</div>
+						<div id="id_bakaze_sha_all">
+							<input type="radio" name="bakaze" id="id_bakaze_sha" value="2">
+							<label for="id_bakaze_sha">西</label>
+						</div>
+					</div>
+					
+					<p>局</p>
+					<div class="group-radio" id="id_kyoku">
+						<div>
+							<input type="radio" name="kyoku" id="id_kyoku_1" value="1" checked>
+							<label for="id_kyoku_1">1</label>
+						</div>
+						<div>
+							<input type="radio" name="kyoku" id="id_kyoku_2" value="2">
+							<label for="id_kyoku_2">2</label>
+						</div>
+						<div>
+							<input type="radio" name="kyoku" id="id_kyoku_3" value="3">
+							<label for="id_kyoku_3">3</label>
+						</div>
+						<div id="id_kyoku_4_all">
+							<input type="radio" name="kyoku" id="id_kyoku_4" value="4">
+							<label for="id_kyoku_4">4</label>
+						</div>
+					</div>
+
+					<p>持ち点</p>
+					<div class="scores">
+						<div class="score">
+							<div id="player1_label" class="player_label">Player 1 : 東</div><br>
+							<input type="number" name="score" value="25000" min="0" max="105000" id="id_score0">
+						</div>
+						<div class="score">
+							<div id="player2_label" class="player_label">Player 2 : 南</div><br>
+							<input type="number" name="score" value="25000" min="0" max="105000" id="id_score1">
+						</div>
+						<div class="score">
+							<div id="player3_label" class="player_label">Player3 : 西</div><br>
+							<input type="number" name="score" value="25000" min="0" max="105000" id="id_score2">
+						</div>
+						<div id="id_score3_all" class="score">
+							<div id="player4_label" class="player_label">Player 4 : 北</div><br>
+							<input type="number" name="score" value="25000" min="0" max="105000" id="id_score3">
+						</div>
+						<div id="score_error_message">
+							持ち点の合計を100000点にしてください。
+						</div>
+					</div>
+					<button type="submit" >実行</button>
+				</form>
+			</div>
+
+			<div id="loading-message">実行中...</div>
+
+			<div id="result_area">
+				{% include "mj_app/result.html" %}
+			</div>
+		</div>
+
+
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="{% static 'mj_app/js/ajax.js' %}"></script>
+		<script src="{% static 'mj_app/js/index.js' %}"></script>
+		
+
+	</body>
+	
+</html>
